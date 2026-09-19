@@ -1,0 +1,42 @@
+{
+  "arms": [
+    "none",
+    "fixed1",
+    "ctrlA",
+    "ctrlB",
+    "ctrlBpp",
+    "adadecay",
+    "awd",
+    "swd",
+    "cwd"
+  ],
+  "base_datasets": 9,
+  "best_descriptive_arm": "ctrlB",
+  "best_descriptive_test_accuracy_mean": 0.864005544450548,
+  "controller_superiority_gate_pass_count": 0,
+  "controller_superiority_gate_passes": [],
+  "cross_arm_exact_metric_duplicates": [
+    {
+      "left": "ctrlB",
+      "paired_cells": 90,
+      "right": "ctrlBpp"
+    }
+  ],
+  "ctrlBpp_diagnosis": "predeclared norm-collapse release condition never activated; ctrlBpp is empirically identical to ctrlB in all 90 paired cells",
+  "evidence": {
+    "analysis_amendment_sha256": "D81E9759E3B6A7DFCBA272F3C03F6EE22E3778FB52A1C526D7F747D160FFA9FF",
+    "analysis_script_sha256": "F3D69E115F741663A5988481AD088A4CE568145D76497F66DA862DF28568B18E",
+    "raw_sha256": "535DF250D5513A5D16C8816C9FAA1AD53A0B293C0055266EB935C5BA9E41D953"
+  },
+  "generated_utc": "2026-08-26T12:52:58Z",
+  "matrix_rows": 810,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "status": "PASS_COMPLETE_ANALYSIS_WITH_INERT_ARM_DIAGNOSIS",
+  "task_variants": 18
+}

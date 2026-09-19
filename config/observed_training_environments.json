@@ -1,0 +1,20 @@
+{
+  "factorial": {
+    "architecture": "x86_64",
+    "device": "cpu",
+    "numpy": "1.26.4",
+    "os_family": "Linux",
+    "psutil": "7.2.2",
+    "python_version": "3.12.3",
+    "torch": "2.8.0+cpu"
+  },
+  "tuning": {
+    "architecture": "aarch64",
+    "device": "cpu",
+    "numpy": "2.4.6",
+    "os_family": "Linux",
+    "psutil": "7.2.2",
+    "python": "3.12.3",
+    "torch": "2.12.0+cu130"
+  }
+}

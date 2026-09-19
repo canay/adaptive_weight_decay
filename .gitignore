@@ -1,0 +1,23 @@
+# local and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex*
+.env
+*.key
+*token*
+
+# internal pipeline state must never be copied here
+MD/_state/
+data_cache/
+reproduced/
+.venv/
+**/inputs/phoneme*.npz
+**/dataset_cache/

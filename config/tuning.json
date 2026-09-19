@@ -1,0 +1,26 @@
+{
+ "run_id":"2026-09-04_codex_vps_tuning_mc009_r2","change_id":"F06-MC-009",
+ "operation_id":"F06-MC009-R1-COMPLETE-20260904-02",
+ "datasets":["adult","bank","digits","phoneme","spambase","qsar","waveform","mfeat","satimage"],
+ "noise":[0.0,0.2],"development_seed":30,"evaluation_seeds":[31,32,33],
+ "arms":["fixed1","ctrlA","ctrlB","adadecay","awd","swd","cwd","cpr_native","cpr_all","none"],
+ "primary_baselines":["adadecay","awd","swd","cwd","cpr_native","fixed1"],
+ "primary_positive_requires":"all_12",
+ "family_verdict_rule":"FULL_SUPPORT iff all12 gates pass; MIXED_SUPPORT iff1-11 pass; NO_SUPPORTED_POSITIVE_INTERACTION iff0 pass; no equivalence from non-significance",
+ "lrs":[0.001,0.003,0.009],"batch":128,"windows":30,
+ "workers":2,"threads_per_worker":1,"device":"cpu",
+ "cell_timeout_seconds":900,"watchdog_seconds":28800,"heartbeat_seconds":15,
+ "disk_floor_bytes":10000000000,"run_output_budget_bytes":1073741824,
+ "effect_floor":0.005,"alpha":0.05,"bootstrap_draws":20000,"bootstrap_seed":2609049,
+ "planned_development":4428,"planned_evaluation":540,"planned_units":4968,
+ "selection_metric":"validation_accuracy","tie_break":"lowest_candidate_index",
+ "post_gate_continuation":{
+   "confirmatory_on_primary_fail":"forbidden",
+   "exploratory_non_rescue":{"authorization":"fresh_change_id_required","fresh_change_id_rule":"A new scientific question, method, tuning range, split, or evaluation requires a fresh methodology change ID, pre-result protocol, independent review and new final manifest; no additional or rescue units in this run."},
+   "hard_stops":["ethics","license","leakage","invalid_data","resource_ceiling"],
+   "primary_verdict_immutable":true,"exploratory_result_may_upgrade_primary_verdict":false,
+   "exploratory_result_may_raise_claim_level":false
+ },
+ "calibration_boundary":{"calibration_scope":"labeled_calibration","evaluation_labels_used_for_calibration":false,"protected_confirmatory_labels_opened":false},
+ "parameter_policy":"Legacy methods regularize all parameters; cpr_native excludes biases per official author grouping; cpr_all is separately labeled adaptation."
+}

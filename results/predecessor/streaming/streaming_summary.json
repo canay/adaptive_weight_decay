@@ -1,0 +1,53 @@
+{
+  "electricity": {
+    "oracle": 0.6937,
+    "oracle_lam": 1.0,
+    "median": 0.6927,
+    "median_lam": 0.1,
+    "no_decay": 0.6927,
+    "ctrl": 0.6872,
+    "adadecay_default": 0.6865,
+    "adadecay_regime": 0.6951,
+    "fixed_grid": {
+      "0.0": 0.6927,
+      "0.01": 0.6854,
+      "0.1": 0.6927,
+      "1.0": 0.6937,
+      "10.0": 0.6518
+    }
+  },
+  "rotating_hyperplane": {
+    "oracle": 0.8296,
+    "oracle_lam": 0.0,
+    "median": 0.8289,
+    "median_lam": 0.1,
+    "no_decay": 0.8296,
+    "ctrl": 0.8282,
+    "adadecay_default": 0.8296,
+    "adadecay_regime": 0.8185,
+    "fixed_grid": {
+      "0.0": 0.8296,
+      "0.01": 0.8295,
+      "0.1": 0.8289,
+      "1.0": 0.8205,
+      "10.0": 0.8106
+    }
+  },
+  "sea": {
+    "oracle": 0.8506,
+    "oracle_lam": 1.0,
+    "median": 0.8491,
+    "median_lam": 0.0,
+    "no_decay": 0.8491,
+    "ctrl": 0.8496,
+    "adadecay_default": 0.8491,
+    "adadecay_regime": 0.8499,
+    "fixed_grid": {
+      "0.0": 0.8491,
+      "0.01": 0.8491,
+      "0.1": 0.8495,
+      "1.0": 0.8506,
+      "10.0": 0.8428
+    }
+  }
+}

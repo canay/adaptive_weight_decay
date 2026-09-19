@@ -1,0 +1,26 @@
+{
+  "scope": "analysis-first public research snapshot",
+  "manuscript_included": false,
+  "private_editorial_records_included": false,
+  "raw_phoneme_redistributed": false,
+  "raw_fashion_mnist_redistributed": false,
+  "result_metrics_modified": false,
+  "analysis_source_repairs": [
+    {
+      "file": "src/predecessor/analyze_q1.py",
+      "reason": "Restrict paired comparisons to the frozen 18-tabular-variant scope; exclude mixed-archive CNN rows",
+      "original_sha256": "b37c7c755336886a7ef58067bdca54ca4c56b029bc8f485856951d7a1839034d",
+      "public_sha256": "bf64da5661bde7585ba5d2b6cf611dd03e0ced3d1e3e5cdc231fb710494b88d7"
+    }
+  ],
+  "metadata_redactions": [
+    {
+      "file": "results/tuning/SELECTION.json",
+      "removed_field": "environment.host",
+      "original_sha256": "28d8b7dac1bc58987604be2223c1205c7b0dac270b1ae0d1a1898c69dc11da7f",
+      "public_sha256": "c9def6641c5fdc6e58283352879ed71168ac4c216119f8c99c7194701dd59732"
+    }
+  ],
+  "historical_hash_notice": "Hashes inside original result records describe historical artifacts. SHA256SUMS.txt describes this public export. The selection metadata export has a different hash after hostname removal.",
+  "budget_bytes": 52428800
+}

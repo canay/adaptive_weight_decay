@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "run_id": "2026-09-04_codex_mta_safe_scaling_mc007",
+  "change_id": "F06-MC-007",
+  "operation_id": "F06-MC007-LITERATURE-MTA-20260904-01",
+  "datasets": ["adult", "bank", "digits", "phoneme", "spambase", "qsar", "waveform", "mfeat", "satimage"],
+  "sizes": ["full", "half"],
+  "noise": [0.0, 0.2],
+  "seeds": [10, 11, 12, 13, 14],
+  "arms": ["none", "fixed1", "ctrlA", "ctrlB", "adadecay", "awd", "swd", "cwd"],
+  "control_types": ["replay", "reverse", "constant"],
+  "batch": 128, "windows": 30, "lr": 0.003,
+  "cell_timeout_seconds": 900, "watchdog_seconds": 21600,
+  "heartbeat_seconds": 15, "disk_floor_bytes": 10000000000,
+  "run_output_budget_bytes": 536870912,
+  "workers": 2, "threads_per_worker": 1, "device": "cpu",
+  "bootstrap_seed": 260904, "bootstrap_draws": 20000,
+  "effect_floor": 0.005, "alpha": 0.05,
+  "partial_result_promotion_policy": "prohibited"
+}

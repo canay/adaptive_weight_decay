@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Please cite this research software and identify the commit used."
+type: software
+title: "Selection-Sensitive Regime Effects in Validation-Free AdamW Weight-Decay Control"
+authors:
+  - family-names: Canay
+    given-names: Ozkan
+    orcid: "https://orcid.org/0000-0001-7539-6001"
+repository-code: "https://github.com/canay/adaptive_weight_decay"
+url: "https://github.com/canay/adaptive_weight_decay"
+license: MIT
+keywords:
+  - AdamW
+  - weight decay
+  - validation-free control
+  - selection policy
+  - label noise
+  - reproducibility
