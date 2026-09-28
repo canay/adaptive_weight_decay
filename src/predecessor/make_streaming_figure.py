@@ -56,11 +56,13 @@ def main():
             return q.groupby("window")["acc"].mean()
 
         ax = axes[0, j]
-        for lab, ser, c in [("controller", wseries("ctrl", 0.0), "#c0392b"),
-                            ("no decay", wseries("fixed", 0.0), "#444"),
-                            (f"best fixed (lam={best_lam})", wseries("fixed", best_lam), "#2c7fb8")]:
+        # Line style as well as hue, so the three series stay distinguishable
+        # when the page is printed in grayscale.
+        for lab, ser, c, ls in [("controller", wseries("ctrl", 0.0), "#c0392b", "-"),
+                                ("no decay", wseries("fixed", 0.0), "#444", "--"),
+                                (f"best fixed (lam={best_lam})", wseries("fixed", best_lam), "#2c7fb8", ":")]:
             sm = ser.rolling(3, min_periods=1).mean()
-            ax.plot(sm.index, sm.values, label=lab, color=c, lw=1.4)
+            ax.plot(sm.index, sm.values, label=lab, color=c, lw=1.4, ls=ls)
         ax.set_title(f"{NICE[s]}\n(best fixed $\\lambda$={best_lam:g})")
         ax.set_xlabel("stream window")
         ax.set_ylabel("prequential accuracy")
@@ -71,20 +73,20 @@ def main():
         lam_ser = sub[sub.method == "ctrl"].groupby("window")["lam"].mean()
         axl.plot(lam_ser.index, lam_ser.values, color="#c0392b", lw=1.4)
         axl.set_xlabel("stream window")
-        axl.set_ylabel("controller lambda")
+        axl.set_ylabel(r"controller $\lambda$")
         axl.grid(alpha=0.25)
     for index, ax in enumerate(axes.ravel()):
-        ax.text(
-            0.02,
-            0.96,
+        ax.annotate(
             f"({chr(97 + index)})",
-            transform=ax.transAxes,
-            ha="left",
+            xy=(0.5, 0),
+            xycoords="axes fraction",
+            xytext=(0, -43),
+            textcoords="offset points",
+            ha="center",
             va="top",
             fontsize=12,
-            fontweight="bold",
-            bbox={"facecolor": "white", "edgecolor": "none", "alpha": 0.78, "pad": 1.0},
-            clip_on=True,
+            fontweight="normal",
+            annotation_clip=False,
         )
     handles, _ = axes[0, 0].get_legend_handles_labels()
     fig.legend(
@@ -96,7 +98,7 @@ def main():
         bbox_to_anchor=(0.5, 0.995),
         frameon=False,
     )
-    fig.tight_layout(rect=(0, 0, 1, 0.91), h_pad=2.5)
+    fig.tight_layout(rect=(0, 0, 1, 0.91), h_pad=3.0)
     png_path = fig_dir / "fig6_streaming.png"
     fig.savefig(png_path, dpi=600, bbox_inches="tight", pad_inches=0.02)
     with Image.open(png_path) as source:

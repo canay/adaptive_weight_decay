@@ -18,3 +18,21 @@ No per-run metric or committed reference statistic was changed.
 
 This check does not certify fresh-training equivalence, journal acceptance,
 or a DOI deposit. The repository checksum manifest binds the exported bytes.
+
+## Figure refresh (2026-09-29)
+
+The six PNGs in `figures/` and three plotting sources in `src/predecessor/`
+(`make_figures_audit.py`, `make_q1_figures.py`, `make_streaming_figure.py`) were
+updated to the versions behind the study's current figures. The changes are
+presentational: print-width layout, type sizes, series names, and markers,
+line styles and hatching that stay distinguishable in grayscale. No result
+table, statistic, or analysis source changed. Apart from these files,
+`REPRODUCE.md` (which now lists the regeneration commands) and this note,
+every file in the checksum manifest is byte-identical to the 2026-09-19
+snapshot.
+
+Run on the committed result tables alone, the three plotting sources
+reproduced all six committed PNGs byte for byte (Python 3.12.7, matplotlib
+3.11.1, Pillow 12.3.0, NumPy 2.3.5, pandas 2.3.3). On the same environment
+`python reproduce.py` ended with `ANALYSIS_REPRODUCTION_PASS`, and the checksum
+manifest was regenerated for the changed files.

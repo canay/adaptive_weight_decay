@@ -12,6 +12,14 @@ from PIL import Image, ImageChops, ImageOps  # noqa
 
 GRID = [0.0, 0.01, 0.1, 1.0, 3.0, 10.0, 30.0]
 TAB = ["adult", "bank", "digits", "phoneme", "spambase", "qsar", "waveform", "mfeat", "satimage"]
+# Axis labels follow the manuscript's own spelling of each task name.
+TASK_LABEL = {"adult": "Adult", "bank": "Bank", "digits": "Digits", "phoneme": "Phoneme",
+              "spambase": "Spambase", "qsar": "QSAR", "waveform": "Waveform",
+              "mfeat": "MFeat", "satimage": "Satimage"}
+# One shape per non-controller series in the Pareto figure, so the points stay
+# separable in grayscale and under deuteranopia.
+PARETO_MARKERS = {"no decay": "o", "median fixed": "s", "AdaDecay": "^",
+                  "validation tuning": "P", "oracle (non-deployable)": "D"}
 
 
 def main():
@@ -58,54 +66,78 @@ def main():
     pts = [("no decay", 1, cell_pool(df, names, 0.0), "#7f8c8d"),
            ("median fixed", 1, pm("median"), "#7fcdbb"),
            ("AdaDecay", 1, pm("adadecay"), "#9b59b6"),
-           ("controller B", 1, pm("ctrlB"), "#c0392b"),
-           ("controller A", 1, pm("ctrlA"), "#e67e22"),
+           ("rule B", 1, pm("ctrlB"), "#c0392b"),
+           ("rule A", 1, pm("ctrlA"), "#e67e22"),
            ("validation tuning", 8, pm("valtuned"), "#2c7fb8"),
            ("oracle (non-deployable)", 8, pm("oracle"), "#34495e")]
     for lab, cost, acc, c in pts:
-        mk = "*" if "controller" in lab else ("D" if "oracle" in lab else "o")
-        ax.scatter([cost], [acc], s=160 if "controller" in lab else 90, color=c, marker=mk, zorder=3, label=lab)
-    ax.set_xlabel("training runs spent on decay selection (cost)", fontsize=11.5)
-    ax.set_ylabel("pooled test accuracy (18 task variants)", fontsize=11.5)
+        # The two controllers keep the star marker and the larger size; the
+        # test is on the label, so it is written against the labels in use.
+        # Every other series gets its OWN shape: four identical circles were
+        # indistinguishable in grayscale, where three of them sat at luminance
+        # 131, 117 and 103 of 255.
+        is_controller = lab in ("rule A", "rule B")
+        mk = "*" if is_controller else PARETO_MARKERS.get(lab, "o")
+        ax.scatter([cost], [acc], s=160 if is_controller else 90, color=c, marker=mk, zorder=3, label=lab)
+    # The figure prints at the column width (about 0.70 of its drawn width), so
+    # 12 pt ticks and legend print near 8.4 pt, level with the other figures.
+    ax.set_xlabel("training runs spent on decay selection (cost)", fontsize=12.5)
+    ax.set_ylabel("pooled test accuracy (18 task variants)", fontsize=12.5)
     ax.set_xticks([1, 8])
-    ax.tick_params(axis="both", labelsize=11)
+    ax.tick_params(axis="both", labelsize=12)
     ax.grid(alpha=0.25)
-    ax.legend(fontsize=11, loc="lower right")
+    ax.legend(fontsize=12, loc="lower right")
     fig.tight_layout()
     save(fig, "fig_q1_pareto")
 
     # ---- fig: complementary-signal regime structure ----
     clean = [f"{t}_full" for t in TAB]
     noisy = [f"{t}_n20" for t in TAB]
-    fig, axes = plt.subplots(1, 2, figsize=(10.8, 4.2), sharey=True)
+    # Drawn at the printed width (about 6.84 in), so the point sizes below print
+    # as set and no label falls under the 7 pt floor.
+    fig, axes = plt.subplots(1, 2, figsize=(6.9, 3.3), sharey=True)
     handles = labels = None
-    for ax, grp, title in [(axes[0], clean, "clean"), (axes[1], noisy, "noisy (label-corrupted)")]:
+    # Series and panel names follow the manuscript: rule A, rule B, corrupted.
+    for ax, grp, title in [(axes[0], clean, "clean"), (axes[1], noisy, "corrupted")]:
         xs = np.arange(len(grp))
         w = 0.2
-        for j, (k, c, lab) in enumerate([("oracle", "#2c7fb8", "oracle"),
-                                          ("ctrlA", "#e67e22", "ctrl A (norm-growth)"),
-                                          ("ctrlB", "#c0392b", "ctrl B (loss-progress)"),
-                                          ("median", "#7fcdbb", "median")]):
-            ax.bar(xs + (j - 1.5) * w, [per[n][k] for n in grp], w, color=c, label=lab)
+        for j, (k, c, lab, hatch) in enumerate([("oracle", "#2c7fb8", "oracle", ""),
+                                                ("ctrlA", "#e67e22", "rule A", "//"),
+                                                ("ctrlB", "#c0392b", "rule B", "xx"),
+                                                ("median", "#7fcdbb", "median", "..")]):
+            ax.bar(xs + (j - 1.5) * w, [per[n][k] for n in grp], w, color=c, label=lab,
+                   hatch=hatch, edgecolor="white", linewidth=0.3)
         ax.set_xticks(xs)
-        ax.set_xticklabels([n.replace("_full", "").replace("_n20", "") for n in grp], rotation=35, ha="right", fontsize=8)
-        ax.set_title(title)
+        # Anchored at the tick, so each slanted name ends at its own group;
+        # centre-rotated names ran together ("QSARWaveform").
+        ax.set_xticklabels([TASK_LABEL[n.replace("_full", "").replace("_n20", "")] for n in grp],
+                           rotation=40, ha="right", rotation_mode="anchor", fontsize=8.5)
+        ax.tick_params(axis="y", labelsize=8.5)
+        ax.set_title(title, fontsize=10)
         ax.grid(axis="y", alpha=0.25)
         handles, labels = ax.get_legend_handles_labels()
     for index, ax in enumerate(axes):
-        ax.text(
-            0.50,
-            -0.40,
+        # A fixed distance below the axes clears the longest slanted name; a
+        # fraction of the axes height put "(a)" on top of "Spambase".
+        ax.annotate(
             f"({chr(97 + index)})",
-            transform=ax.transAxes,
+            xy=(0.50, 0.0),
+            xycoords="axes fraction",
+            xytext=(0, -50),
+            textcoords="offset points",
             ha="center",
             va="top",
             fontsize=10,
             fontweight="normal",
-            clip_on=False,
+            annotation_clip=False,
         )
-    axes[0].set_ylabel("test accuracy")
-    fig.legend(handles, labels, fontsize=8, ncol=4, loc="upper center",
+    axes[0].set_ylabel("test accuracy", fontsize=10)
+    # The legend stays above the panels. Moving it below, as in
+    # fig4_signal_gap, was tried and MEASURED: every variant enlarged the
+    # largest blank band in the asset (12.15 percent to 22.03 percent at best),
+    # because this figure's panel labels then sat 0.40 axes heights below the
+    # axes (they now sit a fixed 50 pt below, under the slanted task names).
+    fig.legend(handles, labels, fontsize=9.5, ncol=4, loc="upper center",
                bbox_to_anchor=(0.5, 0.99), frameon=False)
     fig.tight_layout(rect=(0, 0, 1, 0.88))
     save(fig, "fig_q1_regime")

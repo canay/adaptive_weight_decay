@@ -56,8 +56,22 @@ dataset. Fresh full training requires a separately reviewed portable run plan.
 
 ## Empirical figures
 
-The committed PNGs are the empirical exports used by the study. Original plotting
-sources are retained under `src/predecessor/`. Regeneration requires matplotlib
-in addition to the analysis dependencies; inspect each script's `--help` for its
-input and figure-output directories. The layout-only study workflow diagram and
-article sources are not part of this code/data repository.
+The committed PNGs in `figures/` are the empirical figures used by the study. Their
+plotting sources are under `src/predecessor/` and read only the committed result
+tables. Regeneration also needs matplotlib, which installs Pillow:
+
+```bash
+python -m pip install matplotlib==3.11.1
+python src/predecessor/make_figures_audit.py --dir results/predecessor --fig-dir reproduced/figures
+python src/predecessor/make_q1_figures.py --dir results/predecessor/q1_suite --fig-dir reproduced/figures
+python src/predecessor/make_streaming_figure.py --dir results/predecessor/streaming --fig-dir reproduced/figures
+```
+
+The first script writes `fig1_sensitivity`, `fig2_lambda_traj` and `fig4_signal_gap`,
+the second writes `fig7_pareto` and `fig8_regime` under the names `fig_q1_pareto`
+and `fig_q1_regime`, and the third writes `fig6_streaming`. Each figure also
+gets a PDF twin, and the first script writes two figures the study does not use
+(`fig3_bars`, `fig5_baselines`). Pixel output depends on the matplotlib, font and
+NumPy versions, so a regeneration on another platform is compared by drawing
+rather than by bytes. The layout-only study workflow diagram and article
+sources are not part of this code/data repository.
