@@ -17,12 +17,15 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from PIL import Image, ImageChops, ImageOps  # noqa: E402
 
+# The figure is placed at about 0.76 of its drawn width, so every size here is
+# 1.3 pt below the earlier set: the printed text is one point smaller (author
+# request, 2026-09-30).
 plt.rcParams.update({
-    "font.size": 12,
-    "axes.titlesize": 12,
-    "axes.labelsize": 11.5,
-    "xtick.labelsize": 11,
-    "ytick.labelsize": 11,
+    "font.size": 10.7,
+    "axes.titlesize": 10.7,
+    "axes.labelsize": 10.2,
+    "xtick.labelsize": 9.7,
+    "ytick.labelsize": 9.7,
 })
 
 STREAMS = ["electricity", "rotating_hyperplane", "sea"]
@@ -84,7 +87,7 @@ def main():
             textcoords="offset points",
             ha="center",
             va="top",
-            fontsize=12,
+            fontsize=10.7,
             fontweight="normal",
             annotation_clip=False,
         )
@@ -92,7 +95,7 @@ def main():
     fig.legend(
         handles,
         ["controller", "no decay", "best fixed"],
-        fontsize=12,
+        fontsize=10.7,
         ncol=3,
         loc="upper center",
         bbox_to_anchor=(0.5, 0.995),

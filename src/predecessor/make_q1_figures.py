@@ -80,13 +80,14 @@ def main():
         mk = "*" if is_controller else PARETO_MARKERS.get(lab, "o")
         ax.scatter([cost], [acc], s=160 if is_controller else 90, color=c, marker=mk, zorder=3, label=lab)
     # The figure prints at the column width (about 0.70 of its drawn width), so
-    # 12 pt ticks and legend print near 8.4 pt, level with the other figures.
-    ax.set_xlabel("training runs spent on decay selection (cost)", fontsize=12.5)
-    ax.set_ylabel("pooled test accuracy (18 task variants)", fontsize=12.5)
+    # 10.6 pt ticks and legend print near 7.4 pt: every size is 1.4 pt below the
+    # earlier set, one printed point (author request, 2026-09-30).
+    ax.set_xlabel("training runs spent on decay selection (cost)", fontsize=11.1)
+    ax.set_ylabel("pooled test accuracy (18 task variants)", fontsize=11.1)
     ax.set_xticks([1, 8])
-    ax.tick_params(axis="both", labelsize=12)
+    ax.tick_params(axis="both", labelsize=10.6)
     ax.grid(alpha=0.25)
-    ax.legend(fontsize=12, loc="lower right")
+    ax.legend(fontsize=10.6, loc="lower right")
     fig.tight_layout()
     save(fig, "fig_q1_pareto")
 
@@ -94,7 +95,9 @@ def main():
     clean = [f"{t}_full" for t in TAB]
     noisy = [f"{t}_n20" for t in TAB]
     # Drawn at the printed width (about 6.84 in), so the point sizes below print
-    # as set and no label falls under the 7 pt floor.
+    # as set: tick labels at about 7.3 pt and every other text at about 8 pt,
+    # the scale of the streaming and Pareto figures (author requests,
+    # 2026-09-30); no label falls under the 7 pt floor.
     fig, axes = plt.subplots(1, 2, figsize=(6.9, 3.3), sharey=True)
     handles = labels = None
     # Series and panel names follow the manuscript: rule A, rule B, corrupted.
@@ -111,9 +114,9 @@ def main():
         # Anchored at the tick, so each slanted name ends at its own group;
         # centre-rotated names ran together ("QSARWaveform").
         ax.set_xticklabels([TASK_LABEL[n.replace("_full", "").replace("_n20", "")] for n in grp],
-                           rotation=40, ha="right", rotation_mode="anchor", fontsize=8.5)
-        ax.tick_params(axis="y", labelsize=8.5)
-        ax.set_title(title, fontsize=10)
+                           rotation=40, ha="right", rotation_mode="anchor", fontsize=7.1)
+        ax.tick_params(axis="y", labelsize=7.1)
+        ax.set_title(title, fontsize=7.8)
         ax.grid(axis="y", alpha=0.25)
         handles, labels = ax.get_legend_handles_labels()
     for index, ax in enumerate(axes):
@@ -123,23 +126,24 @@ def main():
             f"({chr(97 + index)})",
             xy=(0.50, 0.0),
             xycoords="axes fraction",
-            xytext=(0, -50),
+            xytext=(0, -43),
             textcoords="offset points",
             ha="center",
             va="top",
-            fontsize=10,
+            fontsize=7.8,
             fontweight="normal",
             annotation_clip=False,
         )
-    axes[0].set_ylabel("test accuracy", fontsize=10)
+    axes[0].set_ylabel("test accuracy", fontsize=7.8)
     # The legend stays above the panels. Moving it below, as in
     # fig4_signal_gap, was tried and MEASURED: every variant enlarged the
     # largest blank band in the asset (12.15 percent to 22.03 percent at best),
     # because this figure's panel labels then sat 0.40 axes heights below the
-    # axes (they now sit a fixed 50 pt below, under the slanted task names).
-    fig.legend(handles, labels, fontsize=9.5, ncol=4, loc="upper center",
+    # axes (they now sit a fixed 43 pt below, under the slanted task names).
+    # The top band is sized to the 7.8 pt legend, about 8 pt above the titles.
+    fig.legend(handles, labels, fontsize=7.8, ncol=4, loc="upper center",
                bbox_to_anchor=(0.5, 0.99), frameon=False)
-    fig.tight_layout(rect=(0, 0, 1, 0.88))
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
     save(fig, "fig_q1_regime")
     print("pooled: oracle %.3f valtuned %.3f ctrlB %.3f ctrlA %.3f adaD %.3f median %.3f" %
           (pm("oracle"), pm("valtuned"), pm("ctrlB"), pm("ctrlA"), pm("adadecay"), pm("median")))

@@ -8,6 +8,11 @@ fig4_signal_gap  : control signal and train-test gap, fixed lambda=0 vs controll
 fig5_baselines   : controller vs AdaDecay / AdamP / cosine / step (accuracy), 6 panels
 
 Outputs PNG (600 dpi) and vector PDF into the chosen figure directory.
+
+fig1, fig2 and fig4 print their tick labels at about 7.3 pt and every other
+text at about 8 pt, the scale of the streaming and Pareto figures, and every
+data line is three quarters of its earlier width (author requests,
+2026-09-30); the 7 pt print floor is kept.
 """
 from __future__ import annotations
 
@@ -18,6 +23,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.ticker import MaxNLocator  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from PIL import Image, ImageChops, ImageOps  # noqa: E402
@@ -62,7 +68,7 @@ def add_panel_labels(axes, offset_pt: float | None = None) -> None:
                 textcoords="offset points",
                 ha="center",
                 va="top",
-                fontsize=10,
+                fontsize=7.8,
                 fontweight="normal",
                 annotation_clip=False,
             )
@@ -74,7 +80,7 @@ def add_panel_labels(axes, offset_pt: float | None = None) -> None:
             transform=ax.transAxes,
             ha="center",
             va="top",
-            fontsize=10,
+            fontsize=7.8,
             fontweight="normal",
             clip_on=False,
         )
@@ -126,29 +132,32 @@ def main() -> None:
         fx = [sub[(sub.method == "fixed") & np.isclose(sub.lam0, l)]["test_acc"].mean() for l in GRID]
         ct = [sub[(sub.method == "ctrl") & np.isclose(sub.lam0, l)]["test_acc"].mean() for l in GRID]
         x = xpos(GRID)
-        ax.plot(x, fx, "o-", label="fixed decay", color="#444", markersize=4, linewidth=1.2)
-        ax.plot(x, ct, "s--", label="controller start", color="#c0392b", markersize=4, linewidth=1.2)
-        ax.set_title(NICE[task], fontsize=10)
+        ax.plot(x, fx, "o-", label="fixed decay", color="#444", markersize=4, linewidth=0.9)
+        ax.plot(x, ct, "s--", label="controller start", color="#c0392b", markersize=4, linewidth=0.9)
+        ax.set_title(NICE[task], fontsize=7.8)
         ax.set_xticks(x)
         # Seven labels share about 1.6 in, so level labels touched ("0.00.010.1");
         # a 45-degree slant anchored at the tick keeps each one readable.
         ax.set_xticklabels([grid_label(l) for l in GRID], rotation=45, ha="right",
-                           rotation_mode="anchor", fontsize=8.5)
-        ax.tick_params(axis="y", labelsize=8.5)
+                           rotation_mode="anchor", fontsize=7.1)
+        ax.tick_params(axis="y", labelsize=7.1)
         ax.grid(alpha=0.25)
     handles, labels = axes[0, 0].get_legend_handles_labels()
-    fig.legend(handles, labels, fontsize=9.5, ncol=2, loc="upper center",
+    fig.legend(handles, labels, fontsize=7.8, ncol=2, loc="upper center",
                bbox_to_anchor=(0.5, 1.0), frameon=False)
-    # 11.5 pt keeps the lambda_0 subscript (0.7 of the label) above 8 pt in print.
-    fig.supxlabel(r"$\lambda$ (fixed) or $\lambda_0$ (controller)", fontsize=11.5)
-    fig.supylabel("final test accuracy", fontsize=10.5)
+    # The 7 pt floor is judged on the label; the lambda_0 subscript (0.7 of
+    # it) sits on the same horizontal line and inherits that verdict.
+    fig.supxlabel(r"$\lambda$ (fixed) or $\lambda_0$ (controller)", fontsize=7.8)
+    fig.supylabel("final test accuracy", fontsize=7.8)
     add_panel_labels(axes, offset_pt=31)
-    fig.tight_layout(rect=(0, 0, 1, 0.95), h_pad=0.8, w_pad=0.8)
+    fig.tight_layout(rect=(0, 0, 1, 0.97), h_pad=0.8, w_pad=0.8)
     save(fig, "fig1_sensitivity")
 
     # ---- fig2 lambda trajectories on noisy tasks, all starts ----
-    # Drawn at the printed width (about 6.84 in); the axis label and legend
-    # carry subscripts, so they stay at 11.5 pt to keep the subscript above 8 pt.
+    # Drawn at the printed width (about 6.84 in). The legend subscripts sit on
+    # horizontal lines and inherit their label's size; the rotated axis label
+    # names the coefficient as in Figure 5 ("controller lambda"), because a
+    # rotated subscript is measured as a run of its own under the 7 pt floor.
     fig, axes = plt.subplots(1, 3, figsize=(6.9, 3.1), sharey=True)
     for ax, task in zip(axes, NOISY):
         sub = tr[(tr.task == task) & (tr.method == "ctrl") & (tr.lr == lr0)]
@@ -162,17 +171,17 @@ def main() -> None:
             ax.plot(m.index, m.values, label=f"$\\lambda_0$={grid_label(lam0)}",
                     ls=TRAJ_STYLES[idx % len(TRAJ_STYLES)],
                     marker=TRAJ_MARKERS[idx % len(TRAJ_MARKERS)],
-                    markevery=(idx, 7), markersize=3.2, linewidth=1.1)
-        ax.set_title(NICE[task], fontsize=10)
-        ax.set_xlabel("epoch", fontsize=10)
-        ax.tick_params(axis="both", labelsize=8.5)
+                    markevery=(idx, 7), markersize=3.2, linewidth=0.825)
+        ax.set_title(NICE[task], fontsize=7.8)
+        ax.set_xlabel("epoch", fontsize=7.8)
+        ax.tick_params(axis="both", labelsize=7.1)
         ax.grid(alpha=0.25)
-    axes[0].set_ylabel(r"controller $\lambda_t$", fontsize=11.5)
+    axes[0].set_ylabel(r"controller $\lambda$", fontsize=7.8)
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(
         handles,
         labels,
-        fontsize=11.5,
+        fontsize=7.8,
         ncol=4,
         loc="upper center",
         bbox_to_anchor=(0.5, 1.0),
@@ -183,7 +192,7 @@ def main() -> None:
     # Below the "epoch" label, not at a fraction of the short axes height,
     # where "(a)" printed on top of "epoch".
     add_panel_labels(axes, offset_pt=34)
-    fig.tight_layout(rect=(0, 0, 1, 0.80), w_pad=0.6)
+    fig.tight_layout(rect=(0, 0, 1, 0.90), w_pad=0.6)
     save(fig, "fig2_lambda_traj")
 
     # ---- fig3 bars: oracle/median/controller for acc, gap, ece ----
@@ -214,27 +223,34 @@ def main() -> None:
     save(fig, "fig3_bars")
 
     # ---- fig4 signal vs gap: fixed lambda=0 vs controller on Adult-S and Digits-S ----
-    # Drawn at the printed width (about 6.84 in). The right-axis label and one
-    # legend entry carry a subscript, so they stay at 11 pt (subscript > 7 pt).
-    fig, axes = plt.subplots(1, 2, figsize=(6.9, 3.3))
+    # Drawn at the printed width (about 6.84 in), so the sizes below print as
+    # set. The s_t symbol stays in the horizontal legend; the rotated
+    # right-axis label names the quantity without a subscript, which the 7 pt
+    # floor would measure as a run of its own. The y locators keep the tick
+    # sets of the earlier, shorter axes and the panel labels sit a fixed
+    # distance below the axes, so the plots fill the band the smaller legend
+    # left free while the printed height stays about 207 pt.
+    fig, axes = plt.subplots(1, 2, figsize=(6.9, 3.0))
     legend_handles, legend_labels = [], []
     for ax, task in zip(axes, ["adult_n20", "digits_n20"]):
         f0 = tr[(tr.task == task) & (tr.method == "fixed") & np.isclose(tr.lam0.fillna(-1), 0.0) & (tr.lr == lr0)]
         c0 = tr[(tr.task == task) & (tr.method == "ctrl") & np.isclose(tr.lam0.fillna(-1), 0.0) & (tr.lr == lr0)]
         fg = f0.groupby("ep")["gap"].mean()
         cg = c0.groupby("ep")["gap"].mean()
-        ax.plot(fg.index, fg.values, "-", label="gap (fixed $\\lambda$=0)", color="#444", linewidth=1.2)
-        ax.plot(cg.index, cg.values, "--", label="gap (controller)", color="#c0392b", linewidth=1.2)
+        ax.plot(fg.index, fg.values, "-", label="gap (fixed $\\lambda$=0)", color="#444", linewidth=0.9)
+        ax.plot(cg.index, cg.values, "--", label="gap (controller)", color="#c0392b", linewidth=0.9)
         if "s" in c0:
             cs = c0.groupby("ep")["s"].mean()
             ax2 = ax.twinx()
-            ax2.plot(cs.index, cs.values, ":", color="#2c7fb8", label="signal $s_t$ (ctrl)", linewidth=1.3)
-            ax2.set_ylabel("control signal $s_t$", fontsize=11)
-            ax2.tick_params(axis="y", labelsize=8.5)
-        ax.set_title(NICE[task], fontsize=10)
-        ax.set_xlabel("epoch", fontsize=10)
-        ax.set_ylabel("train-test gap", fontsize=10)
-        ax.tick_params(axis="both", labelsize=8.5)
+            ax2.plot(cs.index, cs.values, ":", color="#2c7fb8", label="signal $s_t$ (ctrl)", linewidth=0.975)
+            ax2.set_ylabel("control signal", fontsize=7.8)
+            ax2.tick_params(axis="y", labelsize=7.1)
+            ax2.yaxis.set_major_locator(MaxNLocator(nbins=7, steps=[1, 2, 2.5, 5, 10]))
+        ax.set_title(NICE[task], fontsize=7.8)
+        ax.set_xlabel("epoch", fontsize=7.8)
+        ax.set_ylabel("train-test gap", fontsize=7.8)
+        ax.tick_params(axis="both", labelsize=7.1)
+        ax.yaxis.set_major_locator(MaxNLocator(nbins=7, steps=[1, 2, 2.5, 5, 10]))
         ax.grid(alpha=0.25)
         if not legend_handles:
             handles, labels = ax.get_legend_handles_labels()
@@ -243,10 +259,10 @@ def main() -> None:
                 handles += signal_handles
                 labels += signal_labels
             legend_handles, legend_labels = handles, labels
-    add_panel_labels(axes)
-    fig.legend(legend_handles, legend_labels, fontsize=11, loc="upper center",
+    add_panel_labels(axes, offset_pt=33)
+    fig.legend(legend_handles, legend_labels, fontsize=7.8, loc="upper center",
                ncol=3, frameon=False, bbox_to_anchor=(0.5, 1.0), columnspacing=1.2)
-    fig.tight_layout(rect=(0, 0, 1, 0.88), w_pad=1.0)
+    fig.tight_layout(rect=(0, 0, 1, 0.95), w_pad=1.0)
     save(fig, "fig4_signal_gap")
 
     # ---- fig5 baselines vs controller (accuracy) ----

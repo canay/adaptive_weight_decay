@@ -36,3 +36,19 @@ reproduced all six committed PNGs byte for byte (Python 3.12.7, matplotlib
 3.11.1, Pillow 12.3.0, NumPy 2.3.5, pandas 2.3.3). On the same environment
 `python reproduce.py` ended with `ANALYSIS_REPRODUCTION_PASS`, and the checksum
 manifest was regenerated for the changed files.
+
+## Figure refresh (2026-10-04)
+
+The six PNGs in `figures/` and the three plotting sources in `src/predecessor/`
+were updated again to the versions behind the study's current figures. The
+changes are presentational: smaller type sizes with the 7 pt print floor kept,
+and thinner data lines in the sensitivity, trajectory and signal-gap figures.
+No result table, statistic, configuration, or analysis source changed. Apart
+from these files and this note, every file in the checksum manifest is
+byte-identical to the 2026-09-29 snapshot.
+
+Run on the committed result tables alone, the three plotting sources
+reproduced all six committed PNGs byte for byte (Python 3.12.12, matplotlib
+3.11.1, Pillow 12.1.0, NumPy 2.5.2, pandas 2.3.3). The checksum
+manifest was regenerated for the changed files and `python reproduce.py
+--verify-only` passed.
