@@ -63,13 +63,17 @@ def main():
 
     # ---- fig: Pareto accuracy vs tuning cost ----
     fig, ax = plt.subplots(figsize=(5.0, 4.2))
+    # The x value counts training runs spent on decay selection. The oracle is
+    # the best of the seven fixed-grid runs, so it spends seven; validation
+    # tuning sweeps the grid on a held-out split and then retrains once, so it
+    # spends eight (author decision, 2026-10-09).
     pts = [("no decay", 1, cell_pool(df, names, 0.0), "#7f8c8d"),
            ("median fixed", 1, pm("median"), "#7fcdbb"),
            ("AdaDecay", 1, pm("adadecay"), "#9b59b6"),
            ("rule B", 1, pm("ctrlB"), "#c0392b"),
            ("rule A", 1, pm("ctrlA"), "#e67e22"),
            ("validation tuning", 8, pm("valtuned"), "#2c7fb8"),
-           ("oracle (non-deployable)", 8, pm("oracle"), "#34495e")]
+           ("oracle (non-deployable)", 7, pm("oracle"), "#34495e")]
     for lab, cost, acc, c in pts:
         # The two controllers keep the star marker and the larger size; the
         # test is on the label, so it is written against the labels in use.
@@ -84,7 +88,7 @@ def main():
     # earlier set, one printed point (author request, 2026-09-30).
     ax.set_xlabel("training runs spent on decay selection (cost)", fontsize=11.1)
     ax.set_ylabel("pooled test accuracy (18 task variants)", fontsize=11.1)
-    ax.set_xticks([1, 8])
+    ax.set_xticks([1, 7, 8])
     ax.tick_params(axis="both", labelsize=10.6)
     ax.grid(alpha=0.25)
     ax.legend(fontsize=10.6, loc="lower right")

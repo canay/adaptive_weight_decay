@@ -52,3 +52,19 @@ reproduced all six committed PNGs byte for byte (Python 3.12.12, matplotlib
 3.11.1, Pillow 12.1.0, NumPy 2.5.2, pandas 2.3.3). The checksum
 manifest was regenerated for the changed files and `python reproduce.py
 --verify-only` passed.
+
+## Figure 7 correction (2026-10-17)
+
+`figures/fig7_pareto.png` and its plotting source `src/predecessor/make_q1_figures.py` were
+updated to the versions behind the study's current Figure 7. The oracle reference point is now
+plotted at seven training runs, the best of the seven fixed-grid runs, instead of eight; the
+validation-tuning point stays at eight runs, and the x-axis ticks read 1, 7 and 8. No accuracy
+value, result table, statistic, configuration, or analysis source changed. Apart from these two
+files and this note, every file in the checksum manifest is byte-identical to the 2026-10-04
+snapshot.
+
+Run on the committed result tables alone, `src/predecessor/make_q1_figures.py` reproduced the
+committed `fig7_pareto.png` and `fig8_regime.png` byte for byte (Python 3.12.12,
+matplotlib 3.11.1, Pillow 12.0.0, NumPy 2.3.5, pandas 2.3.3).
+The checksum manifest was regenerated for the changed files and `python reproduce.py
+--verify-only` passed.
