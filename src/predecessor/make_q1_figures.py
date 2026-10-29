@@ -20,6 +20,9 @@ TASK_LABEL = {"adult": "Adult", "bank": "Bank", "digits": "Digits", "phoneme": "
 # separable in grayscale and under deuteranopia.
 PARETO_MARKERS = {"no decay": "o", "median fixed": "s", "AdaDecay": "^",
                   "validation tuning": "P", "oracle (non-deployable)": "D"}
+# The review copy places the regime figure at the text width, 390 TeX points.
+PRINT_WIDTH_IN = 390 / 72.27
+PRINT_PT = 7.0
 
 
 def main():
@@ -98,57 +101,71 @@ def main():
     # ---- fig: complementary-signal regime structure ----
     clean = [f"{t}_full" for t in TAB]
     noisy = [f"{t}_n20" for t in TAB]
-    # Drawn at the printed width (about 6.84 in), so the point sizes below print
-    # as set: tick labels at about 7.3 pt and every other text at about 8 pt,
-    # the scale of the streaming and Pareto figures (author requests,
-    # 2026-09-30); no label falls under the 7 pt floor.
-    fig, axes = plt.subplots(1, 2, figsize=(6.9, 3.3), sharey=True)
-    handles = labels = None
-    # Series and panel names follow the manuscript: rule A, rule B, corrupted.
-    for ax, grp, title in [(axes[0], clean, "clean"), (axes[1], noisy, "corrupted")]:
-        xs = np.arange(len(grp))
-        w = 0.2
-        for j, (k, c, lab, hatch) in enumerate([("oracle", "#2c7fb8", "oracle", ""),
-                                                ("ctrlA", "#e67e22", "rule A", "//"),
-                                                ("ctrlB", "#c0392b", "rule B", "xx"),
-                                                ("median", "#7fcdbb", "median", "..")]):
-            ax.bar(xs + (j - 1.5) * w, [per[n][k] for n in grp], w, color=c, label=lab,
-                   hatch=hatch, edgecolor="white", linewidth=0.3)
-        ax.set_xticks(xs)
-        # Anchored at the tick, so each slanted name ends at its own group;
-        # centre-rotated names ran together ("QSARWaveform").
-        ax.set_xticklabels([TASK_LABEL[n.replace("_full", "").replace("_n20", "")] for n in grp],
-                           rotation=40, ha="right", rotation_mode="anchor", fontsize=7.1)
-        ax.tick_params(axis="y", labelsize=7.1)
-        ax.set_title(title, fontsize=7.8)
-        ax.grid(axis="y", alpha=0.25)
-        handles, labels = ax.get_legend_handles_labels()
-    for index, ax in enumerate(axes):
-        # A fixed distance below the axes clears the longest slanted name; a
-        # fraction of the axes height put "(a)" on top of "Spambase".
-        ax.annotate(
-            f"({chr(97 + index)})",
-            xy=(0.50, 0.0),
-            xycoords="axes fraction",
-            xytext=(0, -43),
-            textcoords="offset points",
-            ha="center",
-            va="top",
-            fontsize=7.8,
-            fontweight="normal",
-            annotation_clip=False,
-        )
-    axes[0].set_ylabel("test accuracy", fontsize=7.8)
-    # The legend stays above the panels. Moving it below, as in
-    # fig4_signal_gap, was tried and MEASURED: every variant enlarged the
-    # largest blank band in the asset (12.15 percent to 22.03 percent at best),
-    # because this figure's panel labels then sat 0.40 axes heights below the
-    # axes (they now sit a fixed 43 pt below, under the slanted task names).
-    # The top band is sized to the 7.8 pt legend, about 8 pt above the titles.
-    fig.legend(handles, labels, fontsize=7.8, ncol=4, loc="upper center",
-               bbox_to_anchor=(0.5, 0.99), frameon=False)
-    fig.tight_layout(rect=(0, 0, 1, 0.95))
-    save(fig, "fig_q1_regime")
+
+    # Every text uses one size, fitted so that it prints at the 7 pt floor at
+    # the single-column text width (author request, 2026-10-27).
+    def draw_regime(fs):
+        fig, axes = plt.subplots(1, 2, figsize=(6.9, 3.3), sharey=True)
+        handles = labels = None
+        # Series and panel names follow the manuscript: rule A, rule B, corrupted.
+        for ax, grp, title in [(axes[0], clean, "clean"), (axes[1], noisy, "corrupted")]:
+            xs = np.arange(len(grp))
+            w = 0.2
+            for j, (k, c, lab, hatch) in enumerate([("oracle", "#2c7fb8", "oracle", ""),
+                                                    ("ctrlA", "#e67e22", "rule A", "//"),
+                                                    ("ctrlB", "#c0392b", "rule B", "xx"),
+                                                    ("median", "#7fcdbb", "median", "..")]):
+                ax.bar(xs + (j - 1.5) * w, [per[n][k] for n in grp], w, color=c, label=lab,
+                       hatch=hatch, edgecolor="white", linewidth=0.3)
+            ax.set_xticks(xs)
+            # Anchored at the tick, so each slanted name ends at its own group;
+            # centre-rotated names ran together ("QSARWaveform").
+            ax.set_xticklabels([TASK_LABEL[n.replace("_full", "").replace("_n20", "")] for n in grp],
+                               rotation=40, ha="right", rotation_mode="anchor", fontsize=fs)
+            ax.tick_params(axis="y", labelsize=fs)
+            ax.set_title(title, fontsize=fs)
+            ax.grid(axis="y", alpha=0.25)
+            handles, labels = ax.get_legend_handles_labels()
+        for index, ax in enumerate(axes):
+            # A fixed distance below the axes clears the longest slanted name; a
+            # fraction of the axes height put "(a)" on top of "Spambase". The
+            # distance grows with the slanted names it has to clear.
+            ax.annotate(
+                f"({chr(97 + index)})",
+                xy=(0.50, 0.0),
+                xycoords="axes fraction",
+                xytext=(0, -43 * fs / 7.1),
+                textcoords="offset points",
+                ha="center",
+                va="top",
+                fontsize=fs,
+                fontweight="normal",
+                annotation_clip=False,
+            )
+        axes[0].set_ylabel("test accuracy", fontsize=fs)
+        # The legend stays above the panels. Moving it below, as in
+        # fig4_signal_gap, was tried and MEASURED: every variant enlarged the
+        # largest blank band in the asset (12.15 percent to 22.03 percent at best),
+        # because this figure's panel labels then sat 0.40 axes heights below the
+        # axes (they now sit a fixed distance below, under the slanted task names).
+        fig.legend(handles, labels, fontsize=fs, ncol=4, loc="upper center",
+                   bbox_to_anchor=(0.5, 0.99), frameon=False)
+        fig.tight_layout(rect=(0, 0, 1, 0.95))
+        return fig
+
+    # Redraw until the text prints at PRINT_PT: the printed size is the drawn
+    # size times the text width over the width of the cropped PNG.
+    fs = PRINT_PT
+    for _ in range(6):
+        save(draw_regime(fs), "fig_q1_regime")
+        with Image.open(fd / "fig_q1_regime.png") as im:
+            printed = fs * PRINT_WIDTH_IN * 600 / im.width
+        if PRINT_PT <= printed < PRINT_PT + 0.05:
+            print(f"fig_q1_regime: drawn at {fs:.2f} pt, prints at {printed:.2f} pt")
+            break
+        fs *= (PRINT_PT + 0.02) / printed
+    else:
+        raise SystemExit(f"fig_q1_regime: printed text did not settle at {PRINT_PT} pt ({printed:.3f})")
     print("pooled: oracle %.3f valtuned %.3f ctrlB %.3f ctrlA %.3f adaD %.3f median %.3f" %
           (pm("oracle"), pm("valtuned"), pm("ctrlB"), pm("ctrlA"), pm("adadecay"), pm("median")))
     print(f"figures -> {fd}")

@@ -68,3 +68,19 @@ committed `fig7_pareto.png` and `fig8_regime.png` byte for byte (Python 3.12.12,
 matplotlib 3.11.1, Pillow 12.0.0, NumPy 2.3.5, pandas 2.3.3).
 The checksum manifest was regenerated for the changed files and `python reproduce.py
 --verify-only` passed.
+
+## Figure type-size refresh (2026-10-29)
+
+The five PNGs `fig1_sensitivity.png`, `fig2_lambda_traj.png`, `fig4_signal_gap.png`,
+`fig6_streaming.png` and `fig8_regime.png` in `figures/`, and the three plotting sources in
+`src/predecessor/`, were updated to the versions behind the figures of the single-column review
+copy requested by the journal. The changes are presentational: one in-figure text size per figure
+at the 7 pt print floor, a shared y label per row where repeated labels collided, and the matching
+font settings. No data series, panel, result table, statistic, configuration, or analysis source
+changed, and `fig7_pareto.png` is unchanged. Apart from these files and this note, every file in the
+checksum manifest is byte-identical to the 2026-10-17 snapshot.
+
+Run on the committed result tables alone, the three plotting sources reproduced all six committed
+PNGs byte for byte (Python 3.12.12, matplotlib 3.11.1, Pillow 12.1.0, NumPy 2.5.2, pandas 2.3.3).
+The checksum manifest was regenerated for the changed files and `python reproduce.py
+--verify-only` passed.
