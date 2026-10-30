@@ -21,8 +21,9 @@ rule B and must not be counted as independent supporting evidence.
 ## Export provenance
 
 Per-run CSV metrics, scientific configurations, and frozen numerical summaries
-are copied without changing their values. `PUBLIC_EXPORT.json` records the
-single metadata redaction (a physical hostname in the selection record).
+are copied without changing their values. `PUBLIC_EXPORT.json` records each
+metadata redaction: a physical hostname in the selection record, and the tool
+names removed from run identifiers and provenance headers on 2026-10-30.
 Internal historical hashes continue to name original artifacts, while the root
 `SHA256SUMS.txt` names this public export.
 

@@ -3,7 +3,7 @@ import json, shutil, sys
 from pathlib import Path
 from runner import ROOT, atomic, digest, now
 PROJECT=ROOT.parents[1]
-OLD=PROJECT/'experiments/2026-08-26_codex_local_strong_baseline_confirmatory/outputs/main'
+OLD=PROJECT/'experiments/2026-08-26_locked_confirmatory_matrix/outputs/main'
 
 def prepare():
     cfg=json.loads((ROOT/'config.json').read_text())

@@ -19,8 +19,99 @@
       "removed_field": "environment.host",
       "original_sha256": "28d8b7dac1bc58987604be2223c1205c7b0dac270b1ae0d1a1898c69dc11da7f",
       "public_sha256": "c9def6641c5fdc6e58283352879ed71168ac4c216119f8c99c7194701dd59732"
+    },
+    {
+      "file": "config/factorial.json",
+      "date": "2026-10-30",
+      "change": "tool-named run identifier replaced with a neutral identifier",
+      "original_sha256": "86db281b2092ee5698ca0486568c213e930401918d959ebd54cbdbdf9096aa2d",
+      "public_sha256": "d843b5412698ddb6b21c471a3d77fbf20d2791b3e776068ee7f7f34bf85e8f3f"
+    },
+    {
+      "file": "config/tuning.json",
+      "date": "2026-10-30",
+      "change": "tool-named run identifier replaced with a neutral identifier",
+      "original_sha256": "b9e71fc1108b9cb6d448b323a38c17f799d6689a249f561ff53efa07cbf45f90",
+      "public_sha256": "2e8ea366b7c45abe10147ee9f7f37bfbabca8a4ef6507725c730df7e4781ae1b"
+    },
+    {
+      "file": "results/tuning/decision.json",
+      "date": "2026-10-30",
+      "change": "tool-named run identifier replaced with a neutral identifier",
+      "original_sha256": "079b59374f0b59acba7e439d759919d628c2d5a042e2a6940a76e2099c4271e9",
+      "public_sha256": "2c549b5c74ca91f24dcbef86d0530cc91e1cadf665f131a2b3d6c5b6c9d71afe"
+    },
+    {
+      "file": "src/cnn/run_fashion.py",
+      "date": "2026-10-30",
+      "change": "tool-named predecessor run folder replaced with a neutral identifier",
+      "original_sha256": "4cca84d13ccd65bd3f19007d526bf4245e579e9ef24ab536a36d831f8481b721",
+      "public_sha256": "2d13b9c683701575d381b6f3566ae6b027d6b356e88e3f8b00860ab9c4d40e8d"
+    },
+    {
+      "file": "src/locked/run_confirmatory.py",
+      "date": "2026-10-30",
+      "change": "tool-named predecessor run folder replaced with a neutral identifier",
+      "original_sha256": "5ef2a4466d52edf5d5aac7f402f40950b289cd34b03037cc3cdd5e275f309854",
+      "public_sha256": "a54aefe171f4c81d4e83233d4a47c55a68bcdd03ac021f8642421ab0416c77e8"
+    },
+    {
+      "file": "src/factorial/prepare.py",
+      "date": "2026-10-30",
+      "change": "tool-named predecessor run folder replaced with a neutral identifier",
+      "original_sha256": "da709b025bce0d27ac46007d94b1fd1e1500f31ec80aed101e9ac02e9246b765",
+      "public_sha256": "3b96513beea57020cb064333b7109d2d2cfe416db9dbd823149f1d80bdc4392b"
+    },
+    {
+      "file": "data/INPUT_LINEAGE.json",
+      "date": "2026-10-30",
+      "change": "tool and model fields removed",
+      "original_sha256": "5d1977ac047715dc141365b7fa00a91672f142995dd26a21cd92356c2a12ae0d",
+      "public_sha256": "e0a8f6f29974566bcf0d4ae0623c0af565e838d491ef6504d87677bfe280a4f8"
+    },
+    {
+      "file": "MD/02_design/ANALYSIS_AMENDMENT_20260826.md",
+      "date": "2026-10-30",
+      "change": "tool and model provenance lines removed",
+      "original_sha256": "d81e9759e3b6a7dfcba272f3c03f6ee22e3778fb52a1c526d7f747d160ffa9ff",
+      "public_sha256": "07b6d1b66599b70b0fc3711f86fae947c962ecf90c612abe5206f0b4049c1980"
+    },
+    {
+      "file": "src/cnn/analyze_architecture.py",
+      "date": "2026-10-30",
+      "change": "tool and model lines removed from the generated report header",
+      "original_sha256": "313703827b555faed7e260c28f9cce1e36f63e3cccaac8f8c8e38d3c43920522",
+      "public_sha256": "42b05e65a516cdb88a5edf831603f568747f362761e58cd41e8b8a9cdf998dd8"
+    },
+    {
+      "file": "src/locked/analyze_confirmatory.py",
+      "date": "2026-10-30",
+      "change": "tool and model lines removed from the generated report header",
+      "original_sha256": "f3d69e115f741663a5988481ad088a4ce568145d76497f66da862df28568b18e",
+      "public_sha256": "7198df13194c7d38ecb55b42b9f3fac213f3ab2de18f219933d23cb825693fa0"
+    },
+    {
+      "file": "src/tuning/core.py",
+      "date": "2026-10-30",
+      "change": "tool and model names removed from the docstring",
+      "original_sha256": "23e7fc0ae4068419d2f42538a260c2939dcdf9bcbfd6db6a9a0d4711fb1a6224",
+      "public_sha256": "f386507bfa884059f8367c516a14aa0aeaf5c655cbd46ab472080342d9e6de17"
+    },
+    {
+      "file": "src/tuning/data.py",
+      "date": "2026-10-30",
+      "change": "tool and model names removed from the docstring",
+      "original_sha256": "78a91b449903e68edd934d38bb0a4964139e391fa9fed3626c929ef9be2197b0",
+      "public_sha256": "011c1765c88bb6525c2b30f967ac3c88c10dce67aaa096a26556f97468d384c5"
+    },
+    {
+      "file": "src/tuning/engine.py",
+      "date": "2026-10-30",
+      "change": "tool and model names removed from the docstring",
+      "original_sha256": "db93eaf9bab99cd6696a3393a7ae5c6e78034c93e096852b77d3f8854763fe81",
+      "public_sha256": "a485f8d3ca9780bd489a1e830f34628aa81051f1b8de55925fcca48063f2da5a"
     }
   ],
-  "historical_hash_notice": "Hashes inside original result records describe historical artifacts. SHA256SUMS.txt describes this public export. The selection metadata export has a different hash after hostname removal.",
+  "historical_hash_notice": "Hashes inside original result records describe historical artifacts. SHA256SUMS.txt describes this public export. The selection metadata export has a different hash after hostname removal. The files edited on 2026-10-30 to remove tool names have different hashes as well; results/locked/analysis_summary.json still records the pre-edit hashes of the analysis amendment and the locked analyzer, and those bytes remain in the repository history.",
   "budget_bytes": 52428800
 }

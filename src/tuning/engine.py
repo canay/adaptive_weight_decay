@@ -1,5 +1,5 @@
 """MC009 cell engine: development cannot read test; all failures are retained.
-Date/time: 2026-09-04 16:12 +03:00; Tool: Codex; Model: GPT-5
+Date/time: 2026-09-04 16:12 +03:00
 Operation ID: F06-MC007-LITERATURE-MTA-20260904-01
 """
 import time,threading

@@ -84,3 +84,31 @@ Run on the committed result tables alone, the three plotting sources reproduced 
 PNGs byte for byte (Python 3.12.12, matplotlib 3.11.1, Pillow 12.1.0, NumPy 2.5.2, pandas 2.3.3).
 The checksum manifest was regenerated for the changed files and `python reproduce.py
 --verify-only` passed.
+
+## Run identifier and provenance cleanup (2026-10-30)
+
+Thirteen files were edited to remove the names of workflow tools from run identifiers and
+provenance headers. Four run identifiers now use neutral names taken from the study's own layer
+labels: `2026-08-26_strong_baseline_fidelity`, `2026-08-26_locked_confirmatory_matrix`,
+`2026-09-04_equal_update_budget_factorial` and `2026-09-04_method_specific_search`. They replace
+the `run_id` value in `config/factorial.json`, `config/tuning.json` and
+`results/tuning/decision.json`, and the predecessor run folder named in `src/cnn/run_fashion.py`,
+`src/locked/run_confirmatory.py` and `src/factorial/prepare.py`. Tool and model provenance lines
+were removed from `MD/02_design/ANALYSIS_AMENDMENT_20260826.md`, from the report headers written by
+`src/cnn/analyze_architecture.py` and `src/locked/analyze_confirmatory.py`, and from the docstrings
+of `src/tuning/core.py`, `src/tuning/data.py` and `src/tuning/engine.py`; the `tool` and `model`
+fields were removed from `data/INPUT_LINEAGE.json`. No number, result table, statistic,
+configuration value, or analysis step changed. `PUBLIC_EXPORT.json` lists the original and public
+SHA-256 of each edited file.
+
+`results/locked/analysis_summary.json` records the SHA-256 of the analysis amendment and of
+`src/locked/analyze_confirmatory.py` as they were when the locked analysis ran. Those values now
+describe the pre-cleanup bytes, which remain in this repository's history at commit `195f776`. The
+training sources name their predecessor run folders by the neutral identifiers, which differ from
+the private folder names; as before, these sources are supplied for inspection, not as a
+one-command training release. Apart from these files, `ARTIFACTS.md`, `PUBLIC_EXPORT.json` and this
+note, every file in the checksum manifest is byte-identical to the 2026-10-29 snapshot.
+
+On the committed result tables, `python reproduce.py` ended with `ANALYSIS_REPRODUCTION_PASS`
+(Python 3.12.12, NumPy 2.5.2, pandas 2.3.3, SciPy 1.18.0). The checksum manifest was regenerated
+for the changed files and `python reproduce.py --verify-only` passed.

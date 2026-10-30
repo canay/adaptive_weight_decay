@@ -184,8 +184,6 @@ def main() -> None:
         "# Confirmatory Analysis Report",
         "",
         "Date/time: 2026-08-26 14:11 +03:00  ",
-        "Tool: Codex  ",
-        "Model, if known: GPT-5.6 Extra High (xhigh, user-attested; runtime exposed GPT-5 family)  ",
         "Operation ID: `F06-NOVELTY-ACCEPTABILITY-UPGRADE-20260826-01`",
         "",
         "Verdict: `COMPLETE / CLAIM_GATE_EVALUATED`.",

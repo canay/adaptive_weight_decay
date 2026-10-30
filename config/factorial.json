@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "run_id": "2026-09-04_codex_mta_safe_scaling_mc007",
+  "run_id": "2026-09-04_equal_update_budget_factorial",
   "change_id": "F06-MC-007",
   "operation_id": "F06-MC007-LITERATURE-MTA-20260904-01",
   "datasets": ["adult", "bank", "digits", "phoneme", "spambase", "qsar", "waveform", "mfeat", "satimage"],

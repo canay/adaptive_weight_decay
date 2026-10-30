@@ -1,5 +1,5 @@
 """Shared immutable-grid and atomic-provenance utilities for MC009.
-Date/time: 2026-09-04 16:01 +03:00; Tool: Codex; Model: GPT-5
+Date/time: 2026-09-04 16:01 +03:00
 Operation ID: F06-MC007-LITERATURE-MTA-20260904-01
 """
 import hashlib,itertools,json,math,os,platform,sys,uuid

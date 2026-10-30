@@ -20,7 +20,7 @@ import torch.nn as nn
 
 RUN_ROOT = Path(__file__).resolve().parents[1]
 PROJECT = Path(__file__).resolve().parents[3]
-FIDELITY_SRC = PROJECT / "experiments" / "2026-08-26_codex_local_strong_baseline_fidelity" / "src"
+FIDELITY_SRC = PROJECT / "experiments" / "2026-08-26_strong_baseline_fidelity" / "src"
 sys.path.insert(0, str(PROJECT / "code"))
 sys.path.insert(0, str(FIDELITY_SRC))
 import q1_suite as Q  # noqa: E402

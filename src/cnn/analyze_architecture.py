@@ -71,8 +71,6 @@ def main() -> None:
         "# Fashion-MNIST architecture-layer report",
         "",
         "Date/time: 2026-08-26 14:36 +03:00  ",
-        "Tool: Codex  ",
-        "Model, if known: GPT-5.6 Extra High (xhigh, user-attested; runtime exposed GPT-5 family)  ",
         "Operation ID: `F06-NOVELTY-ACCEPTABILITY-UPGRADE-20260826-01`",
         "",
         "Verdict: `COMPLETE / DESCRIPTIVE_ARCHITECTURE_CHECK`.",

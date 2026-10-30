@@ -1,5 +1,5 @@
 """Partitioned training/validation loader; test requires locked selection.
-Date/time: 2026-09-04 16:03 +03:00; Tool: Codex; Model: GPT-5
+Date/time: 2026-09-04 16:03 +03:00
 Operation ID: F06-MC007-LITERATURE-MTA-20260904-01
 """
 from core import *
